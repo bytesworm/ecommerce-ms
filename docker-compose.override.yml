@@ -1,0 +1,6 @@
+services:
+  auth-service:
+    build:
+      target: dev
+    volumes:
+      - ./auth-service:/app

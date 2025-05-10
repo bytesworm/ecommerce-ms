@@ -1,0 +1,8 @@
+name: ecommerce-ms
+
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "8000:8000"
