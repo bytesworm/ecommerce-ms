@@ -4,3 +4,7 @@ services:
       target: dev
     volumes:
       - ./auth-service:/app
+
+  auth-db:
+    ports:
+      - "5432:5432"
