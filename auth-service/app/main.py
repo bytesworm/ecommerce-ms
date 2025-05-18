@@ -2,6 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
-async def root() -> dict[str, str]:
-    return {"data": "Hello world!"}
+@app.get("/health-check/")
+async def root() -> bool:
+    return True
