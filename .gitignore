@@ -21,3 +21,6 @@ cover/
 __pycache__/
 *.py[cod]
 *$py.class
+
+.mypy_cache/
+.ruff_cache/

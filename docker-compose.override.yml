@@ -1,9 +1,16 @@
 services:
   auth-service:
-    build:
-      target: dev
     volumes:
-      - ./auth-service:/app
+      - ./auth-service:/auth-service
+    develop:
+      watch:
+        - path: ./auth-service
+          action: sync
+          target: /auth-service
+          ignore:
+            - ./auth-service/.venv
+        - path: ./auth-service/pyproject.toml
+          action: rebuild
 
   auth-db:
     ports:

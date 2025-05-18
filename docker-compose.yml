@@ -1,21 +1,42 @@
 name: ecommerce-ms
 
 services:
+  auth-prestart:
+    build:
+      context: ./auth-service
+    env_file:
+      - ./auth-service/.env
+    command: sh scripts/prestart.sh
+    depends_on:
+      auth-db:
+        condition: service_healthy
+        restart: true
+    networks:
+      - backend
+
   auth-service:
     build:
       context: ./auth-service
+    env_file:
+      - ./auth-service/.env
     ports:
       - "8000:8000"
     depends_on:
       auth-db:
         condition: service_healthy
+        restart: true
+      auth-prestart:
+        condition: service_completed_successfully
+        restart: true
+    networks:
+      - backend
 
   auth-db:
     image: postgres:alpine
     env_file:
-      - ./auth-service/db.env
+      - ./auth-service/.env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
