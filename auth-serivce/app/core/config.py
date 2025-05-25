@@ -20,3 +20,5 @@ class Settings(BaseSettings):
             password=cls.POSTGRES_PASSWORD,
             port=cls.POSTGRES_PORT
         )
+
+settings = Settings()
