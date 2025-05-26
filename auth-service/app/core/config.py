@@ -13,14 +13,14 @@ class Settings(BaseSettings):
 
     @computed_field  # type: ignore[prop-decorator]
     @property
-    def SQLALCHEMY_URI(cls) -> PostgresDsn:
+    def SQLALCHEMY_URI(self) -> PostgresDsn:
         return PostgresDsn.build(
             scheme="postgresql+asyncpg",
-            host=cls.POSTGRES_HOST,
-            username=cls.POSTGRES_USER,
-            password=cls.POSTGRES_PASSWORD,
-            path=cls.POSTGRES_DB,
-            port=cls.POSTGRES_PORT,
+            host=self.POSTGRES_HOST,
+            username=self.POSTGRES_USER,
+            password=self.POSTGRES_PASSWORD,
+            path=self.POSTGRES_DB,
+            port=self.POSTGRES_PORT,
         )
 
 
