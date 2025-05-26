@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.deps import get_db
-from app.schemas.user_auth import UserAuthCreate, UserAuthRead
+from app.schemes.user_auth import UserAuthCreate, UserAuthRead
 from app.services.user_auth import UserAuthService
 
 

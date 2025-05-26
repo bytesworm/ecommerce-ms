@@ -16,6 +16,8 @@ dependencies = [
     "pytest>=8.3.5",
     "uvicorn>=0.34.2",
     "pydantic[email]>=2.11.5",
+    "passlib[bcrypt]>=1.7.4",
+    "types-passlib>=1.7.7.20250516",
 ]
 
 [tool.uv]
