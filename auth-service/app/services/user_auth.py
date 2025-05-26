@@ -17,12 +17,10 @@ class UserAuthService:
                 status_code=status.HTTP_409_CONFLICT, detail="Already exists"
             )
 
-        user_auth_model = UserAuth(**user_auth.model_dump()) #TODO: hash password
+        user_auth_model = UserAuth(**user_auth.model_dump())  # TODO: hash password
         user_auth_db = await self.user_auth_repo.save(session, user_auth_model)
         return UserAuthRead.model_validate(user_auth_db)
 
-    async def get_by_id(
-        self, session: AsyncSession, id: int
-    ) -> UserAuthRead | None:
+    async def get_by_id(self, session: AsyncSession, id: int) -> UserAuthRead | None:
         user_auth_db = await self.user_auth_repo.get_by_id(session, id)
         return UserAuthRead.model_validate(user_auth_db)
