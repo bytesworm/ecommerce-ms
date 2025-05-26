@@ -1,6 +1,7 @@
 from pydantic import PostgresDsn, computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env")
 
@@ -10,7 +11,7 @@ class Settings(BaseSettings):
     POSTGRES_HOST: str
     POSTGRES_PORT: int = 5432
 
-    @computed_field # type: ignore[prop-decorator]
+    @computed_field  # type: ignore[prop-decorator]
     @property
     def SQLALCHEMY_URI(cls) -> PostgresDsn:
         return PostgresDsn.build(
@@ -19,7 +20,8 @@ class Settings(BaseSettings):
             username=cls.POSTGRES_USER,
             password=cls.POSTGRES_PASSWORD,
             path=cls.POSTGRES_DB,
-            port=cls.POSTGRES_PORT
+            port=cls.POSTGRES_PORT,
         )
+
 
 settings = Settings()

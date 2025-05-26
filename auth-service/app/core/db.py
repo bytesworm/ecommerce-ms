@@ -6,5 +6,6 @@ engine = create_async_engine(str(settings.SQLALCHEMY_URI))
 
 AsyncSessionLocal = async_sessionmaker(engine)
 
+
 class Base(DeclarativeBase):
     pass

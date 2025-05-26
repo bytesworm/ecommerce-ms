@@ -14,3 +14,8 @@ class UserAuthRepository:
         stmt = select(UserAuth).where(UserAuth.id == id)
         res = await session.execute(stmt)
         return res.scalar_one_or_none()
+
+    async def exists_by_email(self, session: AsyncSession, email: str) -> bool:
+        stmt = select(UserAuth).where(UserAuth.email == email)
+        res = await session.execute(stmt)
+        return bool(res.scalar_one_or_none())

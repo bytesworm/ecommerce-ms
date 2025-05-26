@@ -9,4 +9,3 @@ class UserAuth(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(String(254), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
-
