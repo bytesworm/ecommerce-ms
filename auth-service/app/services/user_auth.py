@@ -1,5 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.core.security import hash_password
 from app.models.user_auth import UserAuth
 from app.repositories.user_repository import UserAuthRepository
 from app.schemes.user_auth import UserAuthCreate, UserAuthRead
@@ -17,8 +18,10 @@ class UserAuthService:
                 status_code=status.HTTP_409_CONFLICT, detail="Already exists"
             )
 
-        user_auth_model = UserAuth(**user_auth.model_dump())  # TODO: hash password
-        user_auth_db = await self.user_auth_repo.save(session, user_auth_model)
+        hashed_password = hash_password(user_auth.password)
+        data = user_auth.model_dump()
+        data["password"] = hashed_password
+        user_auth_db = await self.user_auth_repo.save(session, UserAuth(**data))
         return UserAuthRead.model_validate(user_auth_db)
 
     async def get_by_id(self, session: AsyncSession, id: int) -> UserAuthRead | None:
