@@ -11,3 +11,8 @@ class UserAuthRead(BaseModel):
 
     id: int
     email: EmailStr
+
+
+class UserAuthVerify(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=6, max_length=64)
