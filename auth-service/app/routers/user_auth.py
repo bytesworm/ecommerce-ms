@@ -7,7 +7,7 @@ from app.schemes.user_auth import UserAuthCreate, UserAuthRead
 from app.services.user_auth import UserAuthService
 
 
-router = APIRouter(prefix="/auth")
+router = APIRouter(prefix="/user-auth", tags=["UserAuth"])
 
 
 @router.get("")
