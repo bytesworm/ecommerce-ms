@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
+from fastapi import HTTPException, status
 import jwt
 
 from app.schemes.token import TokenData
@@ -21,3 +22,15 @@ class TokenService:
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
         return encoded_jwt
+
+    def decode(self, token: str) -> TokenData:
+        payload = jwt.decode(token, self.secret_key, self.algorithm)
+        email = payload.get("sub")
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
+
+        return TokenData(sub=email)

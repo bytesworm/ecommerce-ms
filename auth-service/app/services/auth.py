@@ -20,6 +20,6 @@ class AuthService:
                 status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect email or password"
             )
 
-        token_data = TokenData(email=auth_data.email)
+        token_data = TokenData(sub=auth_data.email)
         token = self.token_service.create_access_token(token_data)
         return Token(access_token=token, token_type="Bearer")

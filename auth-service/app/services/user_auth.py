@@ -31,5 +31,12 @@ class UserAuthService:
         user_auth_db = await self.repository.get_by_id(session, id)
         try:
             return UserAuthRead.model_validate(user_auth_db)
-        except ValidationError as e:
+        except ValidationError:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+
+    async def get_by_email(self, session: AsyncSession, email: str) -> UserAuthRead:
+        user_auth_db = await self.repository.get_by_email(session, email)
+        try:
+            return UserAuthRead.model_validate(user_auth_db)
+        except ValidationError:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")

@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.deps import get_db
+from app.deps import get_current_user, get_db
 from app.schemes.user_auth import UserAuthCreate, UserAuthRead
 from app.services.user_auth import UserAuthService
 
@@ -26,3 +26,9 @@ async def create_user_auth(
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> UserAuthRead:
     return await user_auth_service.save(db, user_auth)
+
+@router.get("/me")
+async def get_me(
+    current_user: Annotated[UserAuthRead, Depends(get_current_user)]
+) -> UserAuthRead:
+    return current_user
