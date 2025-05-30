@@ -8,7 +8,7 @@ from app.schemes.token import Token
 from app.services.auth import AuthService
 
 
-router = APIRouter(prefix="/auth", tags=["Auth"])
+router = APIRouter(tags=["Auth"])
 
 
 @router.post(
