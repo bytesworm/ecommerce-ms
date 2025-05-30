@@ -15,9 +15,12 @@ class AuthService:
     async def auth(self, session: AsyncSession, auth_data: AuthRequest) -> Token:
         user_auth_db = await self.user_auth_repo.get_by_email(session, auth_data.email)
 
-        if not user_auth_db or not verify_hash(auth_data.password, user_auth_db.password):
+        if not user_auth_db or not verify_hash(
+            auth_data.password, user_auth_db.password
+        ):
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Incorrect email or password"
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Incorrect email or password",
             )
 
         token_data = TokenData(sub=auth_data.email)

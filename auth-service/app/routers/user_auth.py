@@ -27,8 +27,9 @@ async def create_user_auth(
 ) -> UserAuthRead:
     return await user_auth_service.save(db, user_auth)
 
+
 @router.get("/me")
 async def get_me(
-    current_user: Annotated[UserAuthRead, Depends(get_current_user)]
+    current_user: Annotated[UserAuthRead, Depends(get_current_user)],
 ) -> UserAuthRead:
     return current_user

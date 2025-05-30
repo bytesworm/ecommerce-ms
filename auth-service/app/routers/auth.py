@@ -10,6 +10,7 @@ from app.services.auth import AuthService
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
+
 @router.post("/login")
 async def auth(
     db: Annotated[AsyncSession, Depends(get_db)],
