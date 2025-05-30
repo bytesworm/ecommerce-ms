@@ -14,7 +14,9 @@ def repository() -> UserAuthRepository:
 
 
 @pytest.mark.asyncio
-async def test_save_success(test_session: AsyncSession, repository: UserAuthRepository) -> None:
+async def test_save_success(
+    test_session: AsyncSession, repository: UserAuthRepository
+) -> None:
     test_email = f"{uuid4()}@example.com"
     password = str(uuid4())
     hashed_password = hash_password(password)
@@ -26,7 +28,9 @@ async def test_save_success(test_session: AsyncSession, repository: UserAuthRepo
 
 
 @pytest.mark.asyncio
-async def test_save_unique_fail(test_session: AsyncSession, repository: UserAuthRepository) -> None:
+async def test_save_unique_fail(
+    test_session: AsyncSession, repository: UserAuthRepository
+) -> None:
     test_email = f"{uuid4()}@example.com"
     password = str(uuid4())
     hashed_password = hash_password(password)
@@ -40,7 +44,9 @@ async def test_save_unique_fail(test_session: AsyncSession, repository: UserAuth
 
 
 @pytest.mark.asyncio
-async def test_save_nullable_fail(test_session: AsyncSession, repository: UserAuthRepository) -> None:
+async def test_save_nullable_fail(
+    test_session: AsyncSession, repository: UserAuthRepository
+) -> None:
     test_email = None
     password = None
 
@@ -74,6 +80,7 @@ async def test_get_by_id_none_success(
     user_from_db = await repository.get_by_id(test_session, -1)
 
     assert user_from_db is None
+
 
 @pytest.mark.asyncio
 async def test_get_by_email_success(

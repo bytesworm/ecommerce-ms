@@ -11,12 +11,19 @@ from app.services.auth import AuthService
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
-@router.post("/login", responses={
+@router.post(
+    "/login",
+    responses={
         404: {
             "description": "Invalid credentials",
-            "content": {"application/json": {"example": {"detail": "Incorrect email or password"}}},
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Incorrect email or password"}
+                }
+            },
         }
-    },)
+    },
+)
 async def auth(
     db: Annotated[AsyncSession, Depends(get_db)],
     auth_data: AuthRequest,

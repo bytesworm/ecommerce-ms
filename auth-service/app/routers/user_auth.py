@@ -44,12 +44,18 @@ async def create_user_auth(
     return await user_auth_service.save(db, user_auth)
 
 
-@router.get("/me", description="Get current UserAuth by token", responses={
+@router.get(
+    "/me",
+    description="Get current UserAuth by token",
+    responses={
         401: {
             "description": "Invalid token provided",
-            "content": {"application/json": {"example": { "detail": "Not authenticated" }}},
+            "content": {
+                "application/json": {"example": {"detail": "Not authenticated"}}
+            },
         }
-    },)
+    },
+)
 async def get_me(
     current_user: Annotated[UserAuthRead, Depends(get_current_user)],
 ) -> UserAuthRead:
