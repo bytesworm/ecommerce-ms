@@ -10,7 +10,15 @@ from app.services.user_auth import UserAuthService
 router = APIRouter(prefix="/user-auth", tags=["UserAuth"])
 
 
-@router.get("")
+@router.get(
+    "",
+    responses={
+        404: {
+            "description": "UserAuth not found",
+            "content": {"application/json": {"example": {"detail": "Not found"}}},
+        }
+    },
+)
 async def get_user_auth(
     id: int,
     user_auth_service: Annotated[UserAuthService, Depends(UserAuthService)],
@@ -19,7 +27,15 @@ async def get_user_auth(
     return await user_auth_service.get_by_id(db, id)
 
 
-@router.post("")
+@router.post(
+    "",
+    responses={
+        409: {
+            "description": "UserAuth already exists",
+            "content": {"application/json": {"example": {"detail": "Already exists"}}},
+        }
+    },
+)
 async def create_user_auth(
     user_auth: UserAuthCreate,
     user_auth_service: Annotated[UserAuthService, Depends(UserAuthService)],
@@ -28,7 +44,12 @@ async def create_user_auth(
     return await user_auth_service.save(db, user_auth)
 
 
-@router.get("/me")
+@router.get("/me", description="Get current UserAuth by token", responses={
+        401: {
+            "description": "Invalid token provided",
+            "content": {"application/json": {"example": { "detail": "Not authenticated" }}},
+        }
+    },)
 async def get_me(
     current_user: Annotated[UserAuthRead, Depends(get_current_user)],
 ) -> UserAuthRead:
