@@ -1,0 +1,43 @@
+services:
+  auth-service-db:
+    restart: always
+    image: postgres:alpine
+    env_file:
+      - ./auth-service/.env
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - default
+    volumes:
+      - ./auth-service/pg_data:/var/lib/postgresql/data
+
+  auth-service-prestart:
+    build:
+      context: auth-service
+    command: bash scripts/prestart.sh
+    depends_on:
+      auth-service-db:
+        condition: service_healthy
+    env_file:
+      - ./auth-service/.env
+    networks:
+      - default
+
+
+  auth-service:
+    build:
+      context: ./auth-service
+    env_file:
+      - ./auth-service/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - default
+    depends_on:
+      auth-service-db:
+        condition: service_healthy
+      auth-service-prestart:
+        condition: service_completed_successfully
