@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import hash_password
 from app.models.user_auth import UserAuth
 from app.repositories.user_repository import UserAuthRepository
-from app.schemes.user_auth import UserAuthCreate, UserAuthRead
+from app.schemas.user_auth import UserAuthCreate, UserAuthRead
 
 
 class UserAuthService:

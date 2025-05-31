@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status
 import jwt
 
-from app.schemes.token import TokenData
+from app.schemas.token import TokenData
 
 
 class TokenService:
