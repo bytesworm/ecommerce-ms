@@ -1,19 +1,13 @@
-from collections.abc import AsyncGenerator
 from typing import Annotated
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.db import AsyncSessionLocal
+from app.dependencies.db import get_db
 from app.schemas.user_auth import UserAuthRead
 from app.services.auth import AuthService
 from app.services.token import TokenService
 from app.core.config import settings
 from app.services.user_auth import UserAuthService
-
-
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
-    async with AsyncSessionLocal() as session:
-        yield session
 
 
 def get_token_service() -> TokenService:

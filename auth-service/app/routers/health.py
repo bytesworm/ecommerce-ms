@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.deps import get_db
+from app.dependencies.db import get_db
 
 
 router = APIRouter(prefix="/health", tags=["Health"])
