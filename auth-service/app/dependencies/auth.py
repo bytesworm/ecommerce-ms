@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import Depends
 
 from app.dependencies.token import get_token_service
-from app.repositories.user_repository import UserAuthRepository
+from app.repositories.user_auth import UserAuthRepository
 from app.services.auth import AuthService
 from app.services.token import TokenService
 

@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import hash_password
 from app.models.user_auth import UserAuth
-from app.repositories.user_repository import UserAuthRepository
+from app.repositories.user_auth import UserAuthRepository
 
 
 @pytest.fixture

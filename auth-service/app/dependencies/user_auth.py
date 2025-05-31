@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import Depends
-from app.repositories.user_repository import UserAuthRepository
+from app.repositories.user_auth import UserAuthRepository
 from app.services.user_auth import UserAuthService
 
 

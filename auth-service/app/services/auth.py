@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import verify_hash
-from app.repositories.user_repository import UserAuthRepository
+from app.repositories.user_auth import UserAuthRepository
 from app.schemas.auth import AuthRequest
 from app.schemas.token import Token, TokenData
 from app.services.token import TokenService
