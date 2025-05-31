@@ -1,5 +1,7 @@
 # Authentication Service
 
+![Coverage](https://codecov.io/github/bytesworm/ecommerce-ms/branch/main/graph/badge.svg?token=TCF23H716I&flag=auth-service)
+
 A microservice that manages user authentication data, and handles generation and validation of JWT tokens.
 
 ## Quick start
