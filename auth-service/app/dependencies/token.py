@@ -1,13 +1,16 @@
 from typing import Annotated
+
 from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.dependencies.db import get_db
 from app.schemas.user_auth import UserAuthRead
-from app.services.auth import AuthService
 from app.services.token import TokenService
 from app.core.config import settings
 from app.services.user_auth import UserAuthService
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 def get_token_service() -> TokenService:
@@ -16,15 +19,6 @@ def get_token_service() -> TokenService:
         algorithm=settings.JWT_ALGORITHM,
         access_token_expire_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
     )
-
-
-def get_auth_service(
-    token_service: Annotated[TokenService, Depends(get_token_service)],
-) -> AuthService:
-    return AuthService(token_service)
-
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
 async def get_current_user(

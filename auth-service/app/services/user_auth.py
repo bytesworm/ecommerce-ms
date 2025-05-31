@@ -8,8 +8,8 @@ from app.schemas.user_auth import UserAuthCreate, UserAuthRead
 
 
 class UserAuthService:
-    def __init__(self) -> None:
-        self.repository = UserAuthRepository()
+    def __init__(self, repository: UserAuthRepository) -> None:
+        self.repository = repository
 
     async def save(
         self, session: AsyncSession, user_auth: UserAuthCreate

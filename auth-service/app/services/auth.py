@@ -8,9 +8,11 @@ from app.services.token import TokenService
 
 
 class AuthService:
-    def __init__(self, token_service: TokenService) -> None:
+    def __init__(
+        self, token_service: TokenService, user_auth_repo: UserAuthRepository
+    ) -> None:
         self.token_service = token_service
-        self.user_auth_repo = UserAuthRepository()
+        self.user_auth_repo = user_auth_repo
 
     async def auth(self, session: AsyncSession, auth_data: AuthRequest) -> Token:
         user_auth_db = await self.user_auth_repo.get_by_email(session, auth_data.email)
