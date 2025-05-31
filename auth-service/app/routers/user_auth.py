@@ -3,7 +3,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.dependencies.db import get_db
-from app.deps import get_current_user
+from app.dependencies.token import get_current_user
+from app.dependencies.user_auth import get_user_auth_service
 from app.schemas.user_auth import UserAuthCreate, UserAuthRead
 from app.services.user_auth import UserAuthService
 
@@ -22,7 +23,7 @@ router = APIRouter(prefix="/user-auth", tags=["UserAuth"])
 )
 async def get_user_auth(
     id: int,
-    user_auth_service: Annotated[UserAuthService, Depends(UserAuthService)],
+    user_auth_service: Annotated[UserAuthService, Depends(get_user_auth_service)],
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> UserAuthRead | None:
     return await user_auth_service.get_by_id(db, id)
@@ -39,7 +40,7 @@ async def get_user_auth(
 )
 async def create_user_auth(
     user_auth: UserAuthCreate,
-    user_auth_service: Annotated[UserAuthService, Depends(UserAuthService)],
+    user_auth_service: Annotated[UserAuthService, Depends(get_user_auth_service)],
     db: Annotated[AsyncSession, Depends(get_db)],
 ) -> UserAuthRead:
     return await user_auth_service.save(db, user_auth)
