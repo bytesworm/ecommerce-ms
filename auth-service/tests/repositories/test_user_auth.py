@@ -3,7 +3,6 @@ import pytest
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.security import hash_password
 from app.models.user_auth import UserAuth
 from app.repositories.user_auth import UserAuthRepository
 
@@ -19,9 +18,8 @@ async def test_save_success(
 ) -> None:
     test_email = f"{uuid4()}@example.com"
     password = str(uuid4())
-    hashed_password = hash_password(password)
 
-    user_auth = UserAuth(email=test_email, password=hashed_password)
+    user_auth = UserAuth(email=test_email, password=password)
     await repository.save(test_session, user_auth)
 
     assert user_auth.id is not None
@@ -33,10 +31,9 @@ async def test_save_unique_fail(
 ) -> None:
     test_email = f"{uuid4()}@example.com"
     password = str(uuid4())
-    hashed_password = hash_password(password)
 
-    user_auth = UserAuth(email=test_email, password=hashed_password)
-    user_auth_second = UserAuth(email=test_email, password=hashed_password)
+    user_auth = UserAuth(email=test_email, password=password)
+    user_auth_second = UserAuth(email=test_email, password=password)
     await repository.save(test_session, user_auth)
 
     with pytest.raises(IntegrityError):
@@ -62,9 +59,8 @@ async def test_get_by_id_success(
 ) -> None:
     test_email = f"{uuid4()}@example.com"
     password = str(uuid4())
-    hashed_password = hash_password(password)
 
-    user_auth = UserAuth(email=test_email, password=hashed_password)
+    user_auth = UserAuth(email=test_email, password=password)
     await repository.save(test_session, user_auth)
 
     user_from_db = await repository.get_by_id(test_session, user_auth.id)
@@ -88,9 +84,8 @@ async def test_get_by_email_success(
 ) -> None:
     test_email = f"{uuid4()}@example.com"
     password = str(uuid4())
-    hashed_password = hash_password(password)
 
-    user_auth = UserAuth(email=test_email, password=hashed_password)
+    user_auth = UserAuth(email=test_email, password=password)
     await repository.save(test_session, user_auth)
 
     user_from_db = await repository.get_by_email(test_session, user_auth.email)
