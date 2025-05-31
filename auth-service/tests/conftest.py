@@ -25,7 +25,7 @@ async def test_session() -> AsyncGenerator[AsyncSession, None]:
         yield session
 
 
-async def get_test_db() -> AsyncGenerator[AsyncSession, None]:
+async def get_test_db() -> AsyncGenerator[AsyncSession, None]:  # pragma: no cover
     async with TestAsyncSessionLocal() as session:
         yield session
 
