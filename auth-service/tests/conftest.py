@@ -2,7 +2,9 @@ from typing import AsyncGenerator
 import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
+from app.dependencies.db import get_db
 from app.models.base import Base
+from app.main import app
 
 
 test_engine = create_async_engine("sqlite+aiosqlite://", echo=True)
@@ -25,3 +27,6 @@ async def test_session() -> AsyncGenerator[AsyncSession, None]:
 async def get_test_db() -> AsyncGenerator[AsyncSession, None]:  # pragma: no cover
     async with TestAsyncSessionLocal() as session:
         yield session
+
+
+app.dependency_overrides[get_db] = get_test_db
